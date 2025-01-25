@@ -1,8 +1,9 @@
-name: Update CSV
+name: Update CSV File
 
 on:
   schedule:
     - cron: "*/10 * * * *"  # Запуск каждые 10 минут
+  workflow_dispatch:  # Возможность запустить вручную
 
 jobs:
   update-csv:
@@ -30,4 +31,3 @@ jobs:
         git add data.csv
         git commit -m "Update CSV file"
         git push
-
