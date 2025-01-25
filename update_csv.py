@@ -1,27 +1,21 @@
 import requests
-import csv
 
-# URL JSON-данных
-url = "https://api.geckoterminal.com/api/v2/networks/ton/pools/EQAf2LUJZMdxSAGhlp-A60AN9bqZeVM994vCOXH05JFo-7dc"
+# URL вашего Google Apps Script
+url = "https://script.google.com/macros/s/AKfycbynvcsGmjGBGaUCe1V1bfrGaqUbm_IyVmZKx6WmI5s3uUwHZ4DIgAg-iMSVBrW_i1v3/exec"
 
-# Получаем данные
-response = requests.get(url)
-data = response.json()
+# Локальный путь к файлу CSV
+csv_file_path = "data.csv"
 
-# Извлекаем нужные данные
-attributes = data['data']['attributes']
-csv_data = [
-    ["Token Name", "Price (USD)", "Price Change 24h (%)", "Volume (USD)", "Reserve (USD)"],
-    [
-        attributes['name'],
-        attributes['base_token_price_usd'],
-        attributes['price_change_percentage']['h24'],
-        attributes['volume_usd']['h24'],
-        attributes['reserve_in_usd']
-    ]
-]
+try:
+    # Запрос данных с вашей ссылки
+    response = requests.get(url)
+    response.raise_for_status()  # Проверяем успешность запроса
 
-# Записываем в CSV
-with open("data.csv", "w", newline="") as file:
-    writer = csv.writer(file)
-    writer.writerows(csv_data)
+    # Сохраняем CSV данные в локальный файл
+    with open(csv_file_path, "w", encoding="utf-8") as file:
+        file.write(response.text)
+
+    print(f"CSV файл обновлен: {csv_file_path}")
+
+except requests.RequestException as e:
+    print(f"Ошибка при запросе данных: {e}")
