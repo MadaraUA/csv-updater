@@ -3,12 +3,11 @@ name: Update CSV File
 on:
   schedule:
     - cron: "*/1 * * * *" # Запуск каждую минуту
-  workflow_dispatch:
+  workflow_dispatch: # Ручной запуск
 
 jobs:
   update-csv:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,13 +23,11 @@ jobs:
       - name: Run update script
         run: python update_csv.py
 
-      - name: Configure Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Pull latest changes
+        run: git pull --rebase origin main || echo "No changes to pull"
 
       - name: Commit and push changes
         run: |
           git add data.csv
-          git commit -m "Update CSV file"
-          git push
+          git commit -m "Update CSV file" || echo "No changes to commit"
+          git push origin main || echo "No changes to push"
