@@ -25,8 +25,7 @@ def fetch_and_create_csv():
 
         with open("data.csv", "w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow(["Token Name", "Price (USD)", "Price Change (24h %)", "Trading Volume (24h USD)", "Reserve (USD)"])
-    writer.writerow([token_name.split()[0], price_usd, price_change, volume_usd, reserve_usd])
+    writer.writerows(csv_data)
 
     except requests.RequestException as e:
         print(f"Ошибка при запросе данных: {e}")
