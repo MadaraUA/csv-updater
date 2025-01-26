@@ -2,12 +2,13 @@ name: Update CSV File
 
 on:
   schedule:
-    - cron: "*/1 * * * *" # Виконання щохвилини
-  workflow_dispatch: # Ручний запуск
+    - cron: "*/1 * * * *" # Запуск каждую минуту
+  workflow_dispatch:
 
 jobs:
   update-csv:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -22,6 +23,11 @@ jobs:
 
       - name: Run update script
         run: python update_csv.py
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Commit and push changes
         run: |
