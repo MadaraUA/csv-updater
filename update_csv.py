@@ -1,7 +1,7 @@
 import requests
 
 # URL вашего Google Apps Script
-url = "https://script.google.com/macros/s/AKfycbynvcsGmjGBGaUCe1V1bfrGaqUbm_IyVmZKx6WmI5s3uUwHZ4DIgAg-iMSVBrW_i1v3/exec"
+url = "https://script.google.com/macros/s/AKfycbx1TrOxaISbJlHLTcR8h9zdg2EZ4-SGjut8TH2Ize7EN4sTsHetRmbQTGu53cieMREu/exec"
 
 # Локальный путь к файлу CSV
 csv_file_path = "data.csv"
@@ -16,7 +16,7 @@ try:
         # Сохраняем CSV данные в локальный файл
         with open(csv_file_path, "w", encoding="utf-8") as file:
             file.write(response.text)
-        print(f"CSV файл обновлен: {csv_file_path}")
+        print(f"CSV файл обновлён: {csv_file_path}")
     else:
         print("Ошибка: URL возвращает не CSV-данные.")
 
