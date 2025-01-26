@@ -11,11 +11,14 @@ try:
     response = requests.get(url)
     response.raise_for_status()  # Проверяем успешность запроса
 
-    # Сохраняем CSV данные в локальный файл
-    with open(csv_file_path, "w", encoding="utf-8") as file:
-        file.write(response.text)
-
-    print(f"CSV файл обновлен: {csv_file_path}")
+    # Проверяем, что ответ содержит данные в формате CSV
+    if "text/csv" in response.headers.get("Content-Type", ""):
+        # Сохраняем CSV данные в локальный файл
+        with open(csv_file_path, "w", encoding="utf-8") as file:
+            file.write(response.text)
+        print(f"CSV файл обновлен: {csv_file_path}")
+    else:
+        print("Ошибка: URL возвращает не CSV-данные.")
 
 except requests.RequestException as e:
     print(f"Ошибка при запросе данных: {e}")
