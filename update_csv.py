@@ -23,11 +23,10 @@ def fetch_and_create_csv():
             [token_name, price_usd, price_change, volume_usd, reserve_usd]
         ]
 
-        # Записываем данные в CSV файл
         with open("data.csv", "w", newline="", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerows(csv_data)
-        print("CSV файл обновлен.")
+    writer = csv.writer(file)
+    writer.writerow(["Token Name", "Price (USD)", "Price Change (24h %)", "Trading Volume (24h USD)", "Reserve (USD)"])
+    writer.writerow([token_name.split()[0], price_usd, price_change, volume_usd, reserve_usd])
 
     except requests.RequestException as e:
         print(f"Ошибка при запросе данных: {e}")
