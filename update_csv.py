@@ -25,6 +25,7 @@ def fetch_and_create_csv():
             [token_name, price_usd, price_change, volume_usd, reserve_usd]
         ]
 
+        # Здесь важны правильные отступы
         with open("data.csv", "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
             writer.writerows(csv_data)
