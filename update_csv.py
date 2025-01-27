@@ -33,4 +33,5 @@ def fetch_and_create_csv():
     except requests.RequestException as e:
         print(f"Ошибка при запросе данных: {e}")
 
+# Вызов функции для единственного обновления
 fetch_and_create_csv()
