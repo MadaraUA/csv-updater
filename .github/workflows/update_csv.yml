@@ -2,8 +2,8 @@ name: Update CSV File
 
 on:
   schedule:
-    - cron: "*/1 * * * *" # Запуск каждые 60 секунд
-  workflow_dispatch: # Ручной запуск
+    - cron: "*/1 * * * *" # Запуск каждую минуту
+  workflow_dispatch:
 
 jobs:
   update-csv:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.12"
+          python-version: "3.x"
 
       - name: Install dependencies
         run: pip install requests
@@ -24,5 +24,13 @@ jobs:
       - name: Run update script
         run: python update_csv.py
 
-      - name: Show CSV content
-        run: cat data.csv
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push changes
+        run: |
+          git add data.csv
+          git commit -m "Update CSV file"
+          git push
