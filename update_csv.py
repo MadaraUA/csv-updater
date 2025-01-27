@@ -1,6 +1,5 @@
 import requests
 import csv
-import time
 
 def fetch_and_create_csv():
     # URL API
@@ -25,7 +24,6 @@ def fetch_and_create_csv():
             [token_name, price_usd, price_change, volume_usd, reserve_usd]
         ]
 
-        # Здесь важны правильные отступы
         with open("data.csv", "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
             writer.writerows(csv_data)
@@ -35,7 +33,4 @@ def fetch_and_create_csv():
     except requests.RequestException as e:
         print(f"Ошибка при запросе данных: {e}")
 
-# Выполнение каждые 60 секунд
-while True:
-    fetch_and_create_csv()
-    time.sleep(60)
+fetch_and_create_csv()
