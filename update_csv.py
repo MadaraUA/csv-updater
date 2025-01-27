@@ -26,7 +26,8 @@ def fetch_and_create_csv():
             ["Token Name", "Price (USD)", "Price Change (24h %)", "Trading Volume (24h USD)", "Reserve (USD)"],
             [token_name, price_usd, price_change, volume_usd, reserve_usd]
         ]
-        print(f"Данные для записи: {csv_data}")
+        print("Данные для записи в CSV:", csv_data)
+
 
     except requests.RequestException as e:
         print(f"Ошибка при запросе данных: {e}")
