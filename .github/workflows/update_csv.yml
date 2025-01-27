@@ -2,8 +2,8 @@ name: Update CSV File
 
 on:
   schedule:
-    - cron: "*/1 * * * *"  # Запуск каждые 60 секунд
-  workflow_dispatch:       # Ручной запуск
+    - cron: "*/1 * * * *" # Запуск каждые 60 секунд
+  workflow_dispatch: # Ручной запуск
 
 jobs:
   update-csv:
@@ -23,8 +23,6 @@ jobs:
 
       - name: Run update script
         run: python update_csv.py
-      
-        - name: Show CSV content
-           run: cat data.csv
 
-
+      - name: Show CSV content
+        run: cat data.csv
