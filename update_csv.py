@@ -24,10 +24,10 @@ def fetch_and_create_csv():
             [token_name, price_usd, price_change, volume_usd, reserve_usd]
         ]
 
-        # Использование блока `with` для записи файла
+        # Использование блока with
         with open("data.csv", "w", newline="", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerows(csv_data)  # Отступ в 4 пробела обязателен
+            writer = csv.writer(file)  # Эта строка должна быть с отступом
+            writer.writerows(csv_data)  # Эта строка тоже с отступом
         print("CSV файл обновлен.")
 
     except requests.RequestException as e:
