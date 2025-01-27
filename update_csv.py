@@ -28,7 +28,8 @@ def fetch_and_create_csv():
         with open("data.csv", "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
             writer.writerows(csv_data)
-
+            
+        print("Записываемые данные:", csv_data)
         print("CSV файл обновлен.")
 
     except requests.RequestException as e:
