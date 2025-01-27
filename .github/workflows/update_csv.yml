@@ -2,7 +2,7 @@ name: Update CSV File
 
 on:
   schedule:
-    - cron: "*/1 * * * *"  # Запуск каждую минуту
+    - cron: "*/1 * * * *"  # Запуск каждые 60 секунд
   workflow_dispatch:       # Ручной запуск
 
 jobs:
