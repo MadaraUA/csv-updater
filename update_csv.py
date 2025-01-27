@@ -1,45 +1,35 @@
-import requests
-import csv
-
 def fetch_and_create_csv():
+    # URL API
     url = "https://api.geckoterminal.com/api/v2/networks/ton/pools/EQAf2LUJZMdxSAGhlp-A60AN9bqZeVM994vCOXH05JFo-7dc"
-    
-    # Данные по умолчанию на случай ошибки
-    csv_data = [
-        ["Token Name", "Price (USD)", "Price Change (24h %)", "Trading Volume (24h USD)", "Reserve (USD)"],
-        ["N/A", "N/A", "N/A", "N/A", "N/A"]  # Значения по умолчанию
-    ]
-    
+
     try:
+        # Получение данных
         response = requests.get(url)
-        response.raise_for_status()
+        response.raise_for_status()  # Проверка на ошибки
+
+        # Вывод полного ответа для диагностики
+        print("API Response:", response.json())
+
         data = response.json()["data"]["attributes"]
 
-        # Если данные успешно получены, перезаписываем csv_data
-        token_name = data.get("name", "N/A")
-        price_usd = round(float(data.get("base_token_price_usd", 0)), 2)
-        price_change = round(float(data.get("price_change_percentage", {}).get("h24", 0)), 2)
-        volume_usd = round(float(data.get("volume_usd", {}).get("h24", 0)), 2)
-        reserve_usd = round(float(data.get("reserve_in_usd", 0)), 2)
+        # Форматирование данных
+        token_name = data["name"]
+        price_usd = round(float(data["base_token_price_usd"]), 2)
+        price_change = round(float(data["price_change_percentage"]["h24"]), 2)
+        volume_usd = round(float(data["volume_usd"]["h24"]), 2)
+        reserve_usd = round(float(data["reserve_in_usd"]), 2)
 
+        # Запись в CSV
         csv_data = [
             ["Token Name", "Price (USD)", "Price Change (24h %)", "Trading Volume (24h USD)", "Reserve (USD)"],
             [token_name, price_usd, price_change, volume_usd, reserve_usd]
         ]
-        print("Данные для записи в CSV:", csv_data)
 
+        with open("data.csv", "w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerows(csv_data)
+
+        print("CSV файл обновлен.")
 
     except requests.RequestException as e:
         print(f"Ошибка при запросе данных: {e}")
-    except KeyError as e:
-        print(f"Ошибка доступа к данным: {e}")
-    
-    # Запись данных в CSV (в любом случае)
-    with open("data.csv", "w", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer.writerows(csv_data)
-
-    print("CSV файл обновлен.")
-
-# Вызываем функцию
-fetch_and_create_csv()
